@@ -1,0 +1,2 @@
+C:\Users\Zack\Desktop\C# (Sharp)\HumaneSociety\HumaneSociety\bin\Debug\HumaneSociety.exe.config
+C:\Users\Zack\Desktop\C# (Sharp)\HumaneSociety\HumaneSociety\obj\Debug\HumaneSociety.csprojResolveAssemblyReference.cache
