@@ -44,5 +44,16 @@ namespace HumaneSociety.Properties {
                 return ((string)(this["AnimalDatabaseConnectionString"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=DESKTOP-6AKH47F;Initial Catalog=HumaneSociety;Integrated Security=Tru" +
+            "e;Encrypt=False;TrustServerCertificate=True")]
+        public string HumaneSocietyConnectionString {
+            get {
+                return ((string)(this["HumaneSocietyConnectionString"]));
+            }
+        }
     }
 }

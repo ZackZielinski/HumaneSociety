@@ -11,7 +11,7 @@ namespace HumaneSociety
         static void Main(string[] args)
         {
             MainMenu StartUp = new MainMenu();
-            
+            StartUp.WelcomeMenu();
         }
     }
 }

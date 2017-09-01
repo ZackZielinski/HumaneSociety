@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="HumaneSociety" Class="HumaneSocietyDataDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=DESKTOP-6AKH47F;Initial Catalog=HumaneSociety;Integrated Security=True;Encrypt=False;TrustServerCertificate=True" SettingsObjectName="HumaneSociety.Properties.Settings" SettingsPropertyName="HumaneSocietyConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.AdoptionLog" Member="AdoptionLogs">
+    <Type Name="AdoptionLog">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CustomerID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="AnimalID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Profit" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Animal_AdoptionLog" Member="Animal" ThisKey="AnimalID" OtherKey="AnimalID" Type="Animal" IsForeignKey="true" />
+      <Association Name="Customer_AdoptionLog" Member="Customer" ThisKey="CustomerID" OtherKey="CustomerID" Type="Customer" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Animals" Member="Animals">
+    <Type Name="Animal">
+      <Column Name="AnimalID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="AnimalName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="AnimalAge" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="AnimalType" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Breed" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Room" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FoodBowlsNeeded" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="LastVaccineShot" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Price" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="IsAdopted" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="Animal_AdoptionLog" Member="AdoptionLogs" ThisKey="AnimalID" OtherKey="AnimalID" Type="AdoptionLog" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Customers" Member="Customers">
+    <Type Name="Customer">
+      <Column Name="CustomerID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CustomerName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="CustomerAge" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CustomerDescription" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="IsEligibleToAdopt" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="Customer_AdoptionLog" Member="AdoptionLogs" ThisKey="CustomerID" OtherKey="CustomerID" Type="AdoptionLog" />
+    </Type>
+  </Table>
+</Database>

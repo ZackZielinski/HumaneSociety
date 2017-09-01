@@ -44,20 +44,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Animal.cs" />
-    <Compile Include="AnimalDatabase.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>AnimalDatabase.dbml</DependentUpon>
-    </Compile>
-    <Compile Include="AnimalDatabaseEditing.cs" />
-    <Compile Include="CustomerProfileDatabase.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CustomerProfileDatabase.dbml</DependentUpon>
-    </Compile>
-    <Compile Include="Dog.cs" />
     <Compile Include="EmployeeMenu.cs" />
+    <Compile Include="HumaneSocietyData.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HumaneSocietyData.dbml</DependentUpon>
+    </Compile>
     <Compile Include="MainMenu.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -68,15 +60,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="AnimalDatabase.dbml">
-      <Generator>MSLinqToSQLGenerator</Generator>
-      <LastGenOutput>AnimalDatabase.designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
     <None Include="App.config" />
-    <None Include="CustomerProfileDatabase.dbml">
+    <None Include="HumaneSocietyData.dbml">
       <Generator>MSLinqToSQLGenerator</Generator>
-      <LastGenOutput>CustomerProfileDatabase.designer.cs</LastGenOutput>
+      <LastGenOutput>HumaneSocietyData.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </None>
     <None Include="Properties\Settings.settings">
@@ -88,13 +75,8 @@
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="AnimalDatabase.dbml.layout">
-      <DependentUpon>AnimalDatabase.dbml</DependentUpon>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="CustomerProfileDatabase.dbml.layout">
-      <DependentUpon>CustomerProfileDatabase.dbml</DependentUpon>
+    <None Include="HumaneSocietyData.dbml.layout">
+      <DependentUpon>HumaneSocietyData.dbml</DependentUpon>
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
