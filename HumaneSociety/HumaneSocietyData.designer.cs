@@ -30,15 +30,15 @@ namespace HumaneSociety
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
+    partial void InsertCustomer(Customer instance);
+    partial void UpdateCustomer(Customer instance);
+    partial void DeleteCustomer(Customer instance);
     partial void InsertAdoptionLog(AdoptionLog instance);
     partial void UpdateAdoptionLog(AdoptionLog instance);
     partial void DeleteAdoptionLog(AdoptionLog instance);
     partial void InsertAnimal(Animal instance);
     partial void UpdateAnimal(Animal instance);
     partial void DeleteAnimal(Animal instance);
-    partial void InsertCustomer(Customer instance);
-    partial void UpdateCustomer(Customer instance);
-    partial void DeleteCustomer(Customer instance);
     #endregion
 		
 		public HumaneSocietyDataDataContext() : 
@@ -71,6 +71,14 @@ namespace HumaneSociety
 			OnCreated();
 		}
 		
+		public System.Data.Linq.Table<Customer> Customers
+		{
+			get
+			{
+				return this.GetTable<Customer>();
+			}
+		}
+		
 		public System.Data.Linq.Table<AdoptionLog> AdoptionLogs
 		{
 			get
@@ -86,13 +94,239 @@ namespace HumaneSociety
 				return this.GetTable<Animal>();
 			}
 		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Customers")]
+	public partial class Customer : INotifyPropertyChanging, INotifyPropertyChanged
+	{
 		
-		public System.Data.Linq.Table<Customer> Customers
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _CustomerID;
+		
+		private string _CustomerName;
+		
+		private System.Nullable<int> _CustomerAge;
+		
+		private string _CustomerLikeAnimalType;
+		
+		private string _CustomerLikeAnimalBreed;
+		
+		private string _CustomerDislikeAnimalType;
+		
+		private bool _IsEligibleToAdopt;
+		
+		private EntitySet<AdoptionLog> _AdoptionLogs;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnCustomerIDChanging(int value);
+    partial void OnCustomerIDChanged();
+    partial void OnCustomerNameChanging(string value);
+    partial void OnCustomerNameChanged();
+    partial void OnCustomerAgeChanging(System.Nullable<int> value);
+    partial void OnCustomerAgeChanged();
+    partial void OnCustomerLikeAnimalTypeChanging(string value);
+    partial void OnCustomerLikeAnimalTypeChanged();
+    partial void OnCustomerLikeAnimalBreedChanging(string value);
+    partial void OnCustomerLikeAnimalBreedChanged();
+    partial void OnCustomerDislikeAnimalTypeChanging(string value);
+    partial void OnCustomerDislikeAnimalTypeChanged();
+    partial void OnIsEligibleToAdoptChanging(bool value);
+    partial void OnIsEligibleToAdoptChanged();
+    #endregion
+		
+		public Customer()
+		{
+			this._AdoptionLogs = new EntitySet<AdoptionLog>(new Action<AdoptionLog>(this.attach_AdoptionLogs), new Action<AdoptionLog>(this.detach_AdoptionLogs));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int CustomerID
 		{
 			get
 			{
-				return this.GetTable<Customer>();
+				return this._CustomerID;
 			}
+			set
+			{
+				if ((this._CustomerID != value))
+				{
+					this.OnCustomerIDChanging(value);
+					this.SendPropertyChanging();
+					this._CustomerID = value;
+					this.SendPropertyChanged("CustomerID");
+					this.OnCustomerIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerName", DbType="VarChar(50)")]
+		public string CustomerName
+		{
+			get
+			{
+				return this._CustomerName;
+			}
+			set
+			{
+				if ((this._CustomerName != value))
+				{
+					this.OnCustomerNameChanging(value);
+					this.SendPropertyChanging();
+					this._CustomerName = value;
+					this.SendPropertyChanged("CustomerName");
+					this.OnCustomerNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerAge", DbType="Int")]
+		public System.Nullable<int> CustomerAge
+		{
+			get
+			{
+				return this._CustomerAge;
+			}
+			set
+			{
+				if ((this._CustomerAge != value))
+				{
+					this.OnCustomerAgeChanging(value);
+					this.SendPropertyChanging();
+					this._CustomerAge = value;
+					this.SendPropertyChanged("CustomerAge");
+					this.OnCustomerAgeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerLikeAnimalType", DbType="VarChar(50)")]
+		public string CustomerLikeAnimalType
+		{
+			get
+			{
+				return this._CustomerLikeAnimalType;
+			}
+			set
+			{
+				if ((this._CustomerLikeAnimalType != value))
+				{
+					this.OnCustomerLikeAnimalTypeChanging(value);
+					this.SendPropertyChanging();
+					this._CustomerLikeAnimalType = value;
+					this.SendPropertyChanged("CustomerLikeAnimalType");
+					this.OnCustomerLikeAnimalTypeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerLikeAnimalBreed", DbType="VarChar(50)")]
+		public string CustomerLikeAnimalBreed
+		{
+			get
+			{
+				return this._CustomerLikeAnimalBreed;
+			}
+			set
+			{
+				if ((this._CustomerLikeAnimalBreed != value))
+				{
+					this.OnCustomerLikeAnimalBreedChanging(value);
+					this.SendPropertyChanging();
+					this._CustomerLikeAnimalBreed = value;
+					this.SendPropertyChanged("CustomerLikeAnimalBreed");
+					this.OnCustomerLikeAnimalBreedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerDislikeAnimalType", DbType="VarChar(50)")]
+		public string CustomerDislikeAnimalType
+		{
+			get
+			{
+				return this._CustomerDislikeAnimalType;
+			}
+			set
+			{
+				if ((this._CustomerDislikeAnimalType != value))
+				{
+					this.OnCustomerDislikeAnimalTypeChanging(value);
+					this.SendPropertyChanging();
+					this._CustomerDislikeAnimalType = value;
+					this.SendPropertyChanged("CustomerDislikeAnimalType");
+					this.OnCustomerDislikeAnimalTypeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsEligibleToAdopt", DbType="Bit NOT NULL")]
+		public bool IsEligibleToAdopt
+		{
+			get
+			{
+				return this._IsEligibleToAdopt;
+			}
+			set
+			{
+				if ((this._IsEligibleToAdopt != value))
+				{
+					this.OnIsEligibleToAdoptChanging(value);
+					this.SendPropertyChanging();
+					this._IsEligibleToAdopt = value;
+					this.SendPropertyChanged("IsEligibleToAdopt");
+					this.OnIsEligibleToAdoptChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Customer_AdoptionLog", Storage="_AdoptionLogs", ThisKey="CustomerID", OtherKey="CustomerID")]
+		public EntitySet<AdoptionLog> AdoptionLogs
+		{
+			get
+			{
+				return this._AdoptionLogs;
+			}
+			set
+			{
+				this._AdoptionLogs.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_AdoptionLogs(AdoptionLog entity)
+		{
+			this.SendPropertyChanging();
+			entity.Customer = this;
+		}
+		
+		private void detach_AdoptionLogs(AdoptionLog entity)
+		{
+			this.SendPropertyChanging();
+			entity.Customer = null;
 		}
 	}
 	
@@ -110,9 +344,9 @@ namespace HumaneSociety
 		
 		private System.Nullable<int> _Profit;
 		
-		private EntityRef<Animal> _Animal;
-		
 		private EntityRef<Customer> _Customer;
+		
+		private EntityRef<Animal> _Animal;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -130,8 +364,8 @@ namespace HumaneSociety
 		
 		public AdoptionLog()
 		{
-			this._Animal = default(EntityRef<Animal>);
 			this._Customer = default(EntityRef<Customer>);
+			this._Animal = default(EntityRef<Animal>);
 			OnCreated();
 		}
 		
@@ -223,40 +457,6 @@ namespace HumaneSociety
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Animal_AdoptionLog", Storage="_Animal", ThisKey="AnimalID", OtherKey="AnimalID", IsForeignKey=true)]
-		public Animal Animal
-		{
-			get
-			{
-				return this._Animal.Entity;
-			}
-			set
-			{
-				Animal previousValue = this._Animal.Entity;
-				if (((previousValue != value) 
-							|| (this._Animal.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Animal.Entity = null;
-						previousValue.AdoptionLogs.Remove(this);
-					}
-					this._Animal.Entity = value;
-					if ((value != null))
-					{
-						value.AdoptionLogs.Add(this);
-						this._AnimalID = value.AnimalID;
-					}
-					else
-					{
-						this._AnimalID = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("Animal");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Customer_AdoptionLog", Storage="_Customer", ThisKey="CustomerID", OtherKey="CustomerID", IsForeignKey=true)]
 		public Customer Customer
 		{
@@ -287,6 +487,40 @@ namespace HumaneSociety
 						this._CustomerID = default(Nullable<int>);
 					}
 					this.SendPropertyChanged("Customer");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Animal_AdoptionLog", Storage="_Animal", ThisKey="AnimalID", OtherKey="AnimalID", IsForeignKey=true)]
+		public Animal Animal
+		{
+			get
+			{
+				return this._Animal.Entity;
+			}
+			set
+			{
+				Animal previousValue = this._Animal.Entity;
+				if (((previousValue != value) 
+							|| (this._Animal.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Animal.Entity = null;
+						previousValue.AdoptionLogs.Remove(this);
+					}
+					this._Animal.Entity = value;
+					if ((value != null))
+					{
+						value.AdoptionLogs.Add(this);
+						this._AnimalID = value.AnimalID;
+					}
+					else
+					{
+						this._AnimalID = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Animal");
 				}
 			}
 		}
@@ -615,192 +849,6 @@ namespace HumaneSociety
 		{
 			this.SendPropertyChanging();
 			entity.Animal = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Customers")]
-	public partial class Customer : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _CustomerID;
-		
-		private string _CustomerName;
-		
-		private System.Nullable<int> _CustomerAge;
-		
-		private string _CustomerDescription;
-		
-		private bool _IsEligibleToAdopt;
-		
-		private EntitySet<AdoptionLog> _AdoptionLogs;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnCustomerIDChanging(int value);
-    partial void OnCustomerIDChanged();
-    partial void OnCustomerNameChanging(string value);
-    partial void OnCustomerNameChanged();
-    partial void OnCustomerAgeChanging(System.Nullable<int> value);
-    partial void OnCustomerAgeChanged();
-    partial void OnCustomerDescriptionChanging(string value);
-    partial void OnCustomerDescriptionChanged();
-    partial void OnIsEligibleToAdoptChanging(bool value);
-    partial void OnIsEligibleToAdoptChanged();
-    #endregion
-		
-		public Customer()
-		{
-			this._AdoptionLogs = new EntitySet<AdoptionLog>(new Action<AdoptionLog>(this.attach_AdoptionLogs), new Action<AdoptionLog>(this.detach_AdoptionLogs));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int CustomerID
-		{
-			get
-			{
-				return this._CustomerID;
-			}
-			set
-			{
-				if ((this._CustomerID != value))
-				{
-					this.OnCustomerIDChanging(value);
-					this.SendPropertyChanging();
-					this._CustomerID = value;
-					this.SendPropertyChanged("CustomerID");
-					this.OnCustomerIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerName", DbType="VarChar(50)")]
-		public string CustomerName
-		{
-			get
-			{
-				return this._CustomerName;
-			}
-			set
-			{
-				if ((this._CustomerName != value))
-				{
-					this.OnCustomerNameChanging(value);
-					this.SendPropertyChanging();
-					this._CustomerName = value;
-					this.SendPropertyChanged("CustomerName");
-					this.OnCustomerNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerAge", DbType="Int")]
-		public System.Nullable<int> CustomerAge
-		{
-			get
-			{
-				return this._CustomerAge;
-			}
-			set
-			{
-				if ((this._CustomerAge != value))
-				{
-					this.OnCustomerAgeChanging(value);
-					this.SendPropertyChanging();
-					this._CustomerAge = value;
-					this.SendPropertyChanged("CustomerAge");
-					this.OnCustomerAgeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerDescription", DbType="VarChar(255)")]
-		public string CustomerDescription
-		{
-			get
-			{
-				return this._CustomerDescription;
-			}
-			set
-			{
-				if ((this._CustomerDescription != value))
-				{
-					this.OnCustomerDescriptionChanging(value);
-					this.SendPropertyChanging();
-					this._CustomerDescription = value;
-					this.SendPropertyChanged("CustomerDescription");
-					this.OnCustomerDescriptionChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsEligibleToAdopt", DbType="Bit NOT NULL")]
-		public bool IsEligibleToAdopt
-		{
-			get
-			{
-				return this._IsEligibleToAdopt;
-			}
-			set
-			{
-				if ((this._IsEligibleToAdopt != value))
-				{
-					this.OnIsEligibleToAdoptChanging(value);
-					this.SendPropertyChanging();
-					this._IsEligibleToAdopt = value;
-					this.SendPropertyChanged("IsEligibleToAdopt");
-					this.OnIsEligibleToAdoptChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Customer_AdoptionLog", Storage="_AdoptionLogs", ThisKey="CustomerID", OtherKey="CustomerID")]
-		public EntitySet<AdoptionLog> AdoptionLogs
-		{
-			get
-			{
-				return this._AdoptionLogs;
-			}
-			set
-			{
-				this._AdoptionLogs.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_AdoptionLogs(AdoptionLog entity)
-		{
-			this.SendPropertyChanging();
-			entity.Customer = this;
-		}
-		
-		private void detach_AdoptionLogs(AdoptionLog entity)
-		{
-			this.SendPropertyChanging();
-			entity.Customer = null;
 		}
 	}
 }

@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomerMenu.cs" />
     <Compile Include="EmployeeMenu.cs" />
     <Compile Include="HumaneSocietyData.designer.cs">
       <AutoGen>True</AutoGen>

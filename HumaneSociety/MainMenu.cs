@@ -10,7 +10,8 @@ namespace HumaneSociety
     {
         string UserInput;
         EmployeeMenu employee;
-        
+        CustomerMenu customer;
+
         public MainMenu()
         {
 
@@ -19,6 +20,7 @@ namespace HumaneSociety
         public void WelcomeMenu()
         {
             Console.WriteLine("Welcome to the Humane Society. Are you an Employee or a Customer?");
+            Console.Write(" ");
             UserInput = Console.ReadLine();
             ChangeMenus(UserInput);
         }
@@ -33,7 +35,8 @@ namespace HumaneSociety
                     break;
 
                 case "customer":
-                                        
+                    customer = new CustomerMenu();
+                    customer.Menu();       
                     break;
             }
         }
