@@ -9,10 +9,11 @@ namespace HumaneSociety
     class EmployeeMenu
     {
         int EmployeeInput;
+        HumaneSocietyDataDataContext HumaneDatabase;
 
         public EmployeeMenu()
         {
-            
+            HumaneDatabase = new HumaneSocietyDataDataContext();
         }
 
         public void Menu()
@@ -31,9 +32,18 @@ namespace HumaneSociety
             {
                 case 1:
                     var AnimalList = GetAnimalData();
+                    string AdoptStatus;
                     foreach (var element in AnimalList)
                     {
-                        Console.WriteLine(" ID Number : " + element.AnimalID + ", Name:" + element.AnimalName + " Age: " + element.AnimalAge + " Years old \n Type: " + element.AnimalType + " Breed: " + element.Breed + "\n Last Shot: " + element.LastVaccineShot + "\n This animal Needs to be fed " + element.FoodBowlsNeeded + " times per day. \n Room Number :" + element.Room + " , Is Adopted: " + element.IsAdopted + " , $" + element.Price);
+                        if (element.IsAdopted == false)
+                        {
+                            AdoptStatus = "Yes";
+                        }
+                        else
+                        {
+                            AdoptStatus = "No";
+                        }
+                        Console.WriteLine(" ID Number : " + element.AnimalID + "\n Name:" + element.AnimalName + "\n Age: " + element.AnimalAge + " Years old \n Type: " + element.AnimalType + "\n Breed: " + element.Breed + "\n Last Shot: " + element.LastVaccineShot + "\n Needs to be fed " + element.FoodBowlsNeeded + " times per day. \n Room Number :" + element.Room + "\n Is Adopted: " + AdoptStatus + "\n $" + element.Price);
                     }
                     Console.ReadLine();
                     Menu();
@@ -77,17 +87,15 @@ namespace HumaneSociety
 
         }
 
-        private static List<Animal> GetAnimalData()
+        private List<Animal> GetAnimalData()
         {
-            HumaneSocietyDataDataContext HumaneSocietyDatabase = new HumaneSocietyDataDataContext();
-            var result = from i in HumaneSocietyDatabase.Animals select i;
+            var result = from i in HumaneDatabase.Animals select i;
             return result.ToList();
         }
 
-        private static List<Customer> GetCustomerData()
+        private List<Customer> GetCustomerData()
         {
-            HumaneSocietyDataDataContext HumaneSocietyDatabase = new HumaneSocietyDataDataContext();
-            var result = from i in HumaneSocietyDatabase.Customers select i;
+            var result = from i in HumaneDatabase.Customers select i;
             return result.ToList();
         }
 
@@ -122,8 +130,10 @@ namespace HumaneSociety
 
             if (Match == true)
             {
-                Console.WriteLine($"What is  adoption status?");
+                
+                Console.WriteLine($"What is their adoption status?");
                 AdoptStats = Console.ReadLine();
+                
             }
             else
             {
@@ -134,10 +144,7 @@ namespace HumaneSociety
         }
 
         private void AddNewAnimal()
-        {
-            HumaneSocietyDataDataContext HumaneData = new HumaneSocietyDataDataContext();
-                  
-
+        {               
             Console.WriteLine("Enter Animal's Name: ");
             string NewAnimalName = Console.ReadLine();
 
@@ -170,8 +177,8 @@ namespace HumaneSociety
                 Room = RoomNumber
             };
 
-            HumaneData.Animals.InsertOnSubmit(NewAnimal);
-            HumaneData.SubmitChanges();
+            HumaneDatabase.Animals.InsertOnSubmit(NewAnimal);
+            HumaneDatabase.SubmitChanges();
            }
 
 
