@@ -18,6 +18,7 @@
       <Column Name="CustomerID" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="AnimalID" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="Profit" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Member="CustomerName" Type="System.String" CanBeNull="false" />
       <Association Name="Customer_AdoptionLog" Member="Customer" ThisKey="CustomerID" OtherKey="CustomerID" Type="Customer" IsForeignKey="true" />
       <Association Name="Animal_AdoptionLog" Member="Animal" ThisKey="AnimalID" OtherKey="AnimalID" Type="Animal" IsForeignKey="true" />
     </Type>

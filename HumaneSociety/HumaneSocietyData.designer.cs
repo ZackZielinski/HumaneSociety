@@ -344,6 +344,8 @@ namespace HumaneSociety
 		
 		private System.Nullable<int> _Profit;
 		
+		private string _CustomerName;
+		
 		private EntityRef<Customer> _Customer;
 		
 		private EntityRef<Animal> _Animal;
@@ -360,6 +362,8 @@ namespace HumaneSociety
     partial void OnAnimalIDChanged();
     partial void OnProfitChanging(System.Nullable<int> value);
     partial void OnProfitChanged();
+    partial void OnCustomerNameChanging(string value);
+    partial void OnCustomerNameChanged();
     #endregion
 		
 		public AdoptionLog()
@@ -453,6 +457,26 @@ namespace HumaneSociety
 					this._Profit = value;
 					this.SendPropertyChanged("Profit");
 					this.OnProfitChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerName", CanBeNull=false)]
+		public string CustomerName
+		{
+			get
+			{
+				return this._CustomerName;
+			}
+			set
+			{
+				if ((this._CustomerName != value))
+				{
+					this.OnCustomerNameChanging(value);
+					this.SendPropertyChanging();
+					this._CustomerName = value;
+					this.SendPropertyChanged("CustomerName");
+					this.OnCustomerNameChanged();
 				}
 			}
 		}

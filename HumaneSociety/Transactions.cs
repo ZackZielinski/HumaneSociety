@@ -9,6 +9,7 @@ namespace HumaneSociety
     class Transactions
     {
         HumaneSocietyDataDataContext HumaneDatabase;
+        int AnimalIDNumber;
         public Transactions()
         {
             HumaneDatabase = new HumaneSocietyDataDataContext();
@@ -16,6 +17,8 @@ namespace HumaneSociety
 
         public void StartTransaction()
         {
+            Console.WriteLine("Please Enter the Animal's ID Number");
+            AnimalIDNumber = Convert.ToInt32(Console.ReadLine());
 
         }
     }

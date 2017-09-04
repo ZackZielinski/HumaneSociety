@@ -34,9 +34,9 @@ namespace HumaneSociety
                 case 1:
                     var AnimalList = GetAnimalData();
                     string AdoptStatus;
-                    foreach (var element in AnimalList)
+                    foreach (var animal in AnimalList)
                     {
-                        if (element.IsAdopted == false)
+                        if (animal.IsAdopted == false)
                         {
                             AdoptStatus = "Yes";
                         }
@@ -44,7 +44,7 @@ namespace HumaneSociety
                         {
                             AdoptStatus = "No";
                         }
-                        Console.WriteLine(" ID Number : " + element.AnimalID + "\n Name:" + element.AnimalName + "\n Age: " + element.AnimalAge + " Years old \n Type: " + element.AnimalType + "\n Breed: " + element.Breed + "\n Last Shot: " + element.LastVaccineShot + "\n Needs to be fed " + element.FoodBowlsNeeded + " times per day. \n Room Number :" + element.Room + "\n Is Adopted: " + AdoptStatus + "\n $" + element.Price);
+                        Console.WriteLine(" ID Number : " + animal.AnimalID + "\n Name:" + animal.AnimalName + "\n Age: " + animal.AnimalAge + " Years old \n Type: " + animal.AnimalType + "\n Breed: " + animal.Breed + "\n Last Shot: " + animal.LastVaccineShot + "\n Needs to be fed " + animal.FoodBowlsNeeded + " times per day. \n Room Number :" + animal.Room + "\n Is Adopted: " + AdoptStatus + "\n $" + animal.Price);
                     }
                     Console.ReadLine();
                     Menu();
@@ -57,9 +57,9 @@ namespace HumaneSociety
                 case 3:
                     var CustomerList = GetCustomerData();
                     string Eligibility;
-                    foreach(var element in CustomerList)
+                    foreach(var customer in CustomerList)
                     {
-                        if(element.IsEligibleToAdopt == false)
+                        if(customer.IsEligibleToAdopt == false)
                         {
                             Eligibility = "Yes";
                         }
@@ -67,7 +67,7 @@ namespace HumaneSociety
                         {
                             Eligibility = "No";
                         }
-                        Console.WriteLine(" ID Number : " + element.CustomerID + ", Name:" + element.CustomerName + " Age: " + element.CustomerAge + "\n Likes: " + element.CustomerLikeAnimalType + " Specifically: " + element.CustomerLikeAnimalBreed + "\n Dislikes: " + element.CustomerDislikeAnimalType + "\n Is Eligible To Adopt an Animal: " + Eligibility);
+                        Console.WriteLine(" ID Number : " + customer.CustomerID + ", Name:" + customer.CustomerName + " Age: " + customer.CustomerAge + "\n Likes: " + customer.CustomerLikeAnimalType + " Specifically: " + customer.CustomerLikeAnimalBreed + "\n Dislikes: " + customer.CustomerDislikeAnimalType + "\n Is Eligible To Adopt an Animal: " + Eligibility);
                     }
                     break;
 
@@ -118,7 +118,7 @@ namespace HumaneSociety
                     Menu();
                     break;
                 case "n":
-                    EditAdoptionStatus();
+                    Menu();
                     break;
             }
 
@@ -128,7 +128,7 @@ namespace HumaneSociety
         {
             HumaneSocietyDataDataContext HumaneData = new HumaneSocietyDataDataContext();
             var AnimalList = GetAnimalData();
-            string AdoptStats;
+            int AdoptStats;
 
             Console.WriteLine("Please enter the Animal's ID Number");
             int IDNumber = Convert.ToInt32(Console.ReadLine());
@@ -137,9 +137,10 @@ namespace HumaneSociety
 
             if (Match == true)
             {
+                var SelectedAnimal = AnimalList.Where(x => x.AnimalID == IDNumber);
+                Console.WriteLine($"What is their adoption status? \n 1 - Adopted \n 2 - Not Adopted");
+                AdoptStats = Convert.ToInt32(Console.ReadLine());
                 
-                Console.WriteLine($"What is their adoption status?");
-                AdoptStats = Console.ReadLine();
                 
             }
             else
