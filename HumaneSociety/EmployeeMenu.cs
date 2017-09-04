@@ -10,6 +10,7 @@ namespace HumaneSociety
     {
         int EmployeeInput;
         HumaneSocietyDataDataContext HumaneDatabase;
+        Transactions AdoptingAnAnimal;
 
         public EmployeeMenu()
         {
@@ -74,7 +75,13 @@ namespace HumaneSociety
                     EditCustomerDatabase();
                     break;
 
-                    case 5:
+
+                case 5:
+                    AdoptingAnAnimal = new Transactions();
+                    AdoptingAnAnimal.StartTransaction();
+                    break;
+
+                case 6:
                     Console.WriteLine("Thank you. Please come again!");
                     Console.ReadLine();
                     break;
@@ -101,16 +108,16 @@ namespace HumaneSociety
 
         private void EditAnimalDatabase()
         {
-            Console.WriteLine("Would you like to add an animal (1) \n or change an animal's adoption status? (2)");
-            EmployeeInput = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Would you like to add an animal (Y/N)");
+            string EditInput = Console.ReadLine();
 
-            switch (EmployeeInput)
+            switch (EditInput.ToLower())
             {
-                case 1:
+                case "y":
                     AddNewAnimal();
                     Menu();
                     break;
-                case 2:
+                case "n":
                     EditAdoptionStatus();
                     break;
             }

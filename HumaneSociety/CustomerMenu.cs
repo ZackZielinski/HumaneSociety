@@ -64,7 +64,7 @@ namespace HumaneSociety
             }
             else
             {
-                //SearchbyTraits();
+                SearchByTraits();
             }
 
         }
@@ -118,5 +118,8 @@ namespace HumaneSociety
                 return false;
             }
         }
+
+        private void SearchByTraits()
+        { }
     }
     }
