@@ -27,22 +27,30 @@ namespace HumaneSociety
             string CustomerLastName = Console.ReadLine();
 
             var AnimalList = GetAnimalData();
-
-            var AdoptedAnimal = AnimalList.First(x => x.AnimalID == AnimalIDNumber);
-
-            var NewLog = new AdoptionLog
+            if (AnimalList.Any(x => x.AnimalID == AnimalIDNumber) == true)
             {
-               AnimalID = AnimalIDNumber,
-               CustomerFirstName = CustomerFirstName,
-               CustomerLastName = CustomerLastName,
-               Profit = AdoptedAnimal.Price
-            };
+                var AdoptedAnimal = AnimalList.First(y => y.AnimalID == AnimalIDNumber);
 
-            HumaneDatabase.AdoptionLogs.InsertOnSubmit(NewLog);
-            HumaneDatabase.SubmitChanges();
+                var NewLog = new AdoptionLog
+                {
+                    AnimalID = AdoptedAnimal.AnimalID,
+                    CustomerFirstName = CustomerFirstName,
+                    CustomerLastName = CustomerLastName,
+                    Profit = AdoptedAnimal.Price
+                };
 
-            Console.WriteLine("Adoption Logged. Have a nice Day!");
-            Console.ReadLine();
+                HumaneDatabase.AdoptionLogs.InsertOnSubmit(NewLog);
+                HumaneDatabase.SubmitChanges();
+
+
+                Console.WriteLine("Adoption Logged. Have a nice Day!");
+                Console.ReadLine();
+            }
+            else
+            {
+                Console.WriteLine("Sorry, we couldn't find the animal you were looking for. Please try again.");
+            }
+            StartTransaction();
         }
 
         private List<Animal> GetAnimalData()

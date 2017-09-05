@@ -122,18 +122,25 @@ namespace HumaneSociety
 
         private void EditAnimalDatabase()
         {
-            Console.WriteLine("Would you like to add an animal (Y/N)");
-            string EditInput = Console.ReadLine();
+            Console.WriteLine("Would you like to: \n 1 - Add an Animal \n 2 - Edit an Animal's Adoption Status \n 3 - Edit an Animal's Last Vaccince Shot Date");
+            int EditInput = Convert.ToInt32(Console.ReadLine());
 
-            switch (EditInput.ToLower())
+            switch (EditInput)
             {
-                case "y":
+                case 1:
                     AddNewAnimal();
+                    break;
+                case 2:
+                    EditAdoptionStatus();
+                    break;
+                case 3:
+                    EditVaccineDate();
+                    break;
+                default:
+                    Console.WriteLine("Sorry. That is not an option. Returning to Menu.");
                     Menu();
                     break;
-                case "n":
-                    Menu();
-                    break;
+
             }
 
         }
@@ -150,7 +157,7 @@ namespace HumaneSociety
 
             if (Match == true)
             {
-                var SelectedAnimal = AnimalList.First(x => x.AnimalID == IDNumber);
+                var SelectedAnimal = AnimalList.First(y => y.AnimalID == IDNumber);
                 Console.WriteLine($"What is their adoption status? \n 1 - Adopted \n 2 - Not Adopted");
                 AdoptStatus = Convert.ToInt32(Console.ReadLine());
 
@@ -176,15 +183,36 @@ namespace HumaneSociety
 
         }
 
+        private void EditVaccineDate()
+        {
+            var AnimalList = GetAnimalData();
+
+            Console.WriteLine("Enter an Animal's ID Number");
+            int AnimalIDNumber = Convert.ToInt32(Console.ReadLine());
+
+            if (AnimalList.Any(x => x.AnimalID == AnimalIDNumber) == true)
+            {
+                var SelectedAnimal = AnimalList.First(x => x.AnimalID == AnimalIDNumber);
+                Console.WriteLine("When was their most recent Vaccination? (MM/DD/YYYY or MM-DD-YYYY)");
+                SelectedAnimal.LastVaccineShot = Console.ReadLine();
+            }
+            else
+            {
+                Console.WriteLine("Sorry. We couldn't find the animal you are looking for. Please Try Again.");
+                EditVaccineDate();
+            }
+            Menu();
+        }
+
         private void AddNewAnimal()
         {               
-            Console.WriteLine("Enter Animal's Name: ");
+            Console.WriteLine("Enter the Animal's Name: ");
             string NewAnimalName = Console.ReadLine();
 
-            Console.WriteLine("Enter Animal's Age: ");
+            Console.WriteLine("Enter the Animal's Age: ");
             int NewAnimalAge = Convert.ToInt32(Console.ReadLine());
 
-            Console.WriteLine("Enter the Type of Animal: ");
+            Console.WriteLine("Enter the Type of the Animal: ");
             string NewAnimalType = Console.ReadLine();
 
             Console.WriteLine("Enter the Breed of the Animal: ");
@@ -193,7 +221,7 @@ namespace HumaneSociety
             Console.WriteLine("When was the Animal's Last shot taken?");
             string LastShotTaken = Console.ReadLine();
 
-            Console.WriteLine("How many times does this animal need to be fed?");
+            Console.WriteLine("How many times does this animal need to be fed (per day)?");
             int FoodNeeded = Convert.ToInt32(Console.ReadLine());
 
             Console.WriteLine("Enter The Room the Animal will be staying in: ");
