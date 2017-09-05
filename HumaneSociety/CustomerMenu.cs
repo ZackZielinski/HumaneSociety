@@ -37,6 +37,9 @@ namespace HumaneSociety
                 case 2:
                     AddNewCustomer();
                     break;
+                case 3:
+                    ViewCustomerProfile();
+                    break;
             }
         }
         private void SearchAnimalList()
@@ -159,12 +162,48 @@ namespace HumaneSociety
 
                 }
             }
+            else
+            {
+                Console.WriteLine("Sorry. We don't have that type here. Want to search for something else? (y/n)");
+                AnimalSearch = Console.ReadLine().ToLower();
+                if (AnimalSearch == "y")
+                {
+                    SearchByTraits();
+                }
+                else
+                {
+                    Menu();
+                }
+            }
+
+        }
+
+        private void ViewCustomerProfile()
+        {
+            var CustomerList = GetCustomerData();
+
+            Console.WriteLine("Please Enter your ID Number or Your Name");
+            string EnteredCustomerName = Console.ReadLine();
+
+            if (CustomerList.Any(x => x.CustomerName == EnteredCustomerName) == true)
+            {
+                var CurrentCustomer = CustomerList.First(x => x.CustomerName == EnteredCustomerName);
+
+                Console.WriteLine(CurrentCustomer.CustomerName);
+                
+            }
 
         }
 
         private List<Animal> GetAnimalData()
         {
             var result = from i in HumaneDatabase.Animals select i;
+            return result.ToList();
+        }
+
+        private List<Customer> GetCustomerData()
+        {
+            var result = from i in HumaneDatabase.Customers select i;
             return result.ToList();
         }
     }

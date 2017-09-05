@@ -1,26 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="HumaneSociety" Class="HumaneSocietyDataDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Connection Mode="AppSettings" ConnectionString="Data Source=DESKTOP-6AKH47F;Initial Catalog=HumaneSociety;Integrated Security=True;Encrypt=False;TrustServerCertificate=True" SettingsObjectName="HumaneSociety.Properties.Settings" SettingsPropertyName="HumaneSocietyConnectionString" Provider="System.Data.SqlClient" />
-  <Table Name="dbo.Customers" Member="Customers">
-    <Type Name="Customer">
-      <Column Name="CustomerID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="CustomerName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="CustomerAge" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="CustomerLikeAnimalType" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="CustomerLikeAnimalBreed" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="CustomerDislikeAnimalType" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="IsEligibleToAdopt" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Association Name="Customer_AdoptionLog" Member="AdoptionLogs" ThisKey="CustomerID" OtherKey="CustomerID" Type="AdoptionLog" />
-    </Type>
-  </Table>
   <Table Name="dbo.AdoptionLog" Member="AdoptionLogs">
     <Type Name="AdoptionLog">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="CustomerID" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="AnimalID" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="Profit" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Member="CustomerName" Type="System.String" CanBeNull="false" />
-      <Association Name="Customer_AdoptionLog" Member="Customer" ThisKey="CustomerID" OtherKey="CustomerID" Type="Customer" IsForeignKey="true" />
+      <Column Name="CustomerName" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="CustomerID" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="Animal_AdoptionLog" Member="Animal" ThisKey="AnimalID" OtherKey="AnimalID" Type="Animal" IsForeignKey="true" />
+      <Association Name="Customer_AdoptionLog" Member="Customer" ThisKey="CustomerID" OtherKey="CustomerID" Type="Customer" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Animals" Member="Animals">
@@ -36,6 +24,19 @@
       <Column Name="Price" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="IsAdopted" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Association Name="Animal_AdoptionLog" Member="AdoptionLogs" ThisKey="AnimalID" OtherKey="AnimalID" Type="AdoptionLog" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Customers" Member="Customers">
+    <Type Name="Customer">
+      <Column Name="CustomerID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CustomerFirstName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="CustomerAge" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CustomerLikeAnimalType" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="CustomerLikeAnimalBreed" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="CustomerDislikeAnimalType" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="IsEligibleToAdopt" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="CustomerLastName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Association Name="Customer_AdoptionLog" Member="AdoptionLogs" ThisKey="CustomerID" OtherKey="CustomerID" Type="AdoptionLog" />
     </Type>
   </Table>
 </Database>

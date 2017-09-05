@@ -128,7 +128,7 @@ namespace HumaneSociety
         {
             HumaneSocietyDataDataContext HumaneData = new HumaneSocietyDataDataContext();
             var AnimalList = GetAnimalData();
-            int AdoptStats;
+            int AdoptStatus;
 
             Console.WriteLine("Please enter the Animal's ID Number");
             int IDNumber = Convert.ToInt32(Console.ReadLine());
@@ -137,11 +137,23 @@ namespace HumaneSociety
 
             if (Match == true)
             {
-                var SelectedAnimal = AnimalList.Where(x => x.AnimalID == IDNumber);
+                var SelectedAnimal = AnimalList.First(x => x.AnimalID == IDNumber);
                 Console.WriteLine($"What is their adoption status? \n 1 - Adopted \n 2 - Not Adopted");
-                AdoptStats = Convert.ToInt32(Console.ReadLine());
-                
-                
+                AdoptStatus = Convert.ToInt32(Console.ReadLine());
+
+                switch (AdoptStatus)
+                {
+                    case 1:
+                        SelectedAnimal.IsAdopted = true;
+                        break;
+                    case 2:
+                        SelectedAnimal.IsAdopted = false;
+                        break;
+                    default:
+                        Console.WriteLine("Sorry, that is not an option. Returning to menu");
+                        Menu();
+                        break;
+                }
             }
             else
             {
@@ -187,6 +199,7 @@ namespace HumaneSociety
 
             HumaneDatabase.Animals.InsertOnSubmit(NewAnimal);
             HumaneDatabase.SubmitChanges();
+            Menu();
            }
 
 
