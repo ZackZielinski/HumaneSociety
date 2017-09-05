@@ -44,7 +44,7 @@ namespace HumaneSociety
                         {
                             AdoptStatus = "No";
                         }
-                        Console.WriteLine(" ID Number : " + animal.AnimalID + "\n Name:" + animal.AnimalName + "\n Age: " + animal.AnimalAge + " Years old \n Type: " + animal.AnimalType + "\n Breed: " + animal.Breed + "\n Last Shot: " + animal.LastVaccineShot + "\n Needs to be fed " + animal.FoodBowlsNeeded + " times per day. \n Room Number :" + animal.Room + "\n Is Adopted: " + AdoptStatus + "\n $" + animal.Price);
+                        Console.WriteLine("ID Number: " + animal.AnimalID + "\n Name:" + animal.AnimalName + "\n Age: " + animal.AnimalAge + " Years old \n Type: " + animal.AnimalType + "\n Breed: " + animal.Breed + "\n Last Shot: " + animal.LastVaccineShot + "\n Needs to be fed " + animal.FoodBowlsNeeded + " times per day. \n Room Number :" + animal.Room + "\n Is Adopted: " + AdoptStatus + "\n $" + animal.Price);
                     }
                     Console.ReadLine();
                     Menu();
@@ -67,7 +67,7 @@ namespace HumaneSociety
                         {
                             Eligibility = "No";
                         }
-                        Console.WriteLine(" ID Number : " + customer.CustomerID + ", Name:" + customer.CustomerName + " Age: " + customer.CustomerAge + "\n Likes: " + customer.CustomerLikeAnimalType + " Specifically: " + customer.CustomerLikeAnimalBreed + "\n Dislikes: " + customer.CustomerDislikeAnimalType + "\n Is Eligible To Adopt an Animal: " + Eligibility);
+                        Console.WriteLine(" ID Number : " + customer.CustomerID + "\n Name:" + customer.CustomerFirstName + " " + customer.CustomerLastName + "\n Age: " + customer.CustomerAge + "\n Likes: " + customer.CustomerLikeAnimalType + "\n Specifically Likes: " + customer.CustomerLikeAnimalBreed + "\n Dislikes: " + customer.CustomerDislikeAnimalType + "\n Is Eligible To Adopt an Animal: " + Eligibility);
                     }
                     break;
 
@@ -126,7 +126,6 @@ namespace HumaneSociety
 
         private void EditAdoptionStatus()
         {
-            HumaneSocietyDataDataContext HumaneData = new HumaneSocietyDataDataContext();
             var AnimalList = GetAnimalData();
             int AdoptStatus;
 
@@ -205,7 +204,6 @@ namespace HumaneSociety
 
        private string CheckIfRoomIsAlreadyUsed()
         {
-            HumaneSocietyDataDataContext HumaneData = new HumaneSocietyDataDataContext();
             var AnimalList = GetAnimalData();
 
             string RoomNumber = Console.ReadLine();

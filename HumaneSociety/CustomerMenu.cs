@@ -76,8 +76,11 @@ namespace HumaneSociety
         
         private void AddNewCustomer()
         {
-            Console.WriteLine("Enter Your Name:");
-            string NewCustomerName = Console.ReadLine();
+            Console.WriteLine("Enter Your First Name:");
+            string NewCustomerFirstName = Console.ReadLine();
+
+            Console.WriteLine("Enter Your Last Name:");
+            string NewCustomerLastName = Console.ReadLine();
 
             Console.WriteLine("Enter Your Age:");
             int NewCustomerAge = Convert.ToInt32(Console.ReadLine());
@@ -95,7 +98,8 @@ namespace HumaneSociety
 
             var NewCustomer = new Customer
             {
-                CustomerName = NewCustomerName,
+                CustomerFirstName = NewCustomerFirstName,
+                CustomerLastName = NewCustomerLastName,
                 CustomerAge = NewCustomerAge,
                 CustomerLikeAnimalType = NewCustomerTypeLikes,
                 CustomerLikeAnimalBreed = NewCustomerBreedLikes,
@@ -182,15 +186,43 @@ namespace HumaneSociety
         {
             var CustomerList = GetCustomerData();
 
-            Console.WriteLine("Please Enter your ID Number or Your Name");
-            string EnteredCustomerName = Console.ReadLine();
+            Console.WriteLine("Please Enter your ID Number or Your First Name");
+            string FirstCustomerInput = Console.ReadLine();
 
-            if (CustomerList.Any(x => x.CustomerName == EnteredCustomerName) == true)
+
+            if (CustomerList.Any(x => x.CustomerFirstName == FirstCustomerInput) == true)
             {
-                var CurrentCustomer = CustomerList.First(x => x.CustomerName == EnteredCustomerName);
+                Console.WriteLine("Please Enter your Last Name");
+                string SecondCustomerInput = Console.ReadLine();
 
-                Console.WriteLine(CurrentCustomer.CustomerName);
+                var CurrentCustomer = CustomerList.First(x => x.CustomerFirstName == FirstCustomerInput && x.CustomerLastName == SecondCustomerInput);
+
+                string Eligibility = CheckAdoptionStatus(CurrentCustomer);
+
+                Console.WriteLine("ID Number: " + CurrentCustomer.CustomerID + "\n Name:" + CurrentCustomer.CustomerFirstName + " " + CurrentCustomer.CustomerLastName + "\n Age: " + CurrentCustomer.CustomerAge + "\n Likes: " + CurrentCustomer.CustomerLikeAnimalType + "\n Specifically Likes: " + CurrentCustomer.CustomerLikeAnimalBreed + "\n Dislikes: " + CurrentCustomer.CustomerDislikeAnimalType + "\n Is Eligible To Adopt an Animal: " + Eligibility);
+            }
+            else if(CustomerList.Any(x => x.CustomerID == Convert.ToInt32(FirstCustomerInput)) == true)
+            {
+                var CurrentCustomer = CustomerList.First(x => x.CustomerID == Convert.ToInt32(FirstCustomerInput));
+
+                string Eligibility = CheckAdoptionStatus(CurrentCustomer);
                 
+                Console.WriteLine("ID Number: " + CurrentCustomer.CustomerID + "\n Name:" + CurrentCustomer.CustomerFirstName + " " + CurrentCustomer.CustomerLastName + "\n Age: " + CurrentCustomer.CustomerAge + "\n Likes: " + CurrentCustomer.CustomerLikeAnimalType + "\n Specifically Likes: " + CurrentCustomer.CustomerLikeAnimalBreed + "\n Dislikes: " + CurrentCustomer.CustomerDislikeAnimalType + "\n Is Eligible To Adopt an Animal: " + Eligibility);
+
+
+            }
+        }
+
+        private string CheckAdoptionStatus(Customer CurrentCustomer)
+        {
+
+            if (CurrentCustomer.IsEligibleToAdopt == true)
+            {
+                return "Yes";
+            }
+            else
+            {
+                return "No";
             }
 
         }

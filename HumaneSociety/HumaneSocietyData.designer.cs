@@ -108,13 +108,11 @@ namespace HumaneSociety
 		
 		private System.Nullable<int> _Profit;
 		
-		private string _CustomerName;
+		private string _CustomerFirstName;
 		
-		private System.Nullable<int> _CustomerID;
+		private string _CustomerLastName;
 		
 		private EntityRef<Animal> _Animal;
-		
-		private EntityRef<Customer> _Customer;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -126,16 +124,15 @@ namespace HumaneSociety
     partial void OnAnimalIDChanged();
     partial void OnProfitChanging(System.Nullable<int> value);
     partial void OnProfitChanged();
-    partial void OnCustomerNameChanging(string value);
-    partial void OnCustomerNameChanged();
-    partial void OnCustomerIDChanging(System.Nullable<int> value);
-    partial void OnCustomerIDChanged();
+    partial void OnCustomerFirstNameChanging(string value);
+    partial void OnCustomerFirstNameChanged();
+    partial void OnCustomerLastNameChanging(string value);
+    partial void OnCustomerLastNameChanged();
     #endregion
 		
 		public AdoptionLog()
 		{
 			this._Animal = default(EntityRef<Animal>);
-			this._Customer = default(EntityRef<Customer>);
 			OnCreated();
 		}
 		
@@ -203,46 +200,42 @@ namespace HumaneSociety
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerName", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string CustomerName
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerFirstName", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string CustomerFirstName
 		{
 			get
 			{
-				return this._CustomerName;
+				return this._CustomerFirstName;
 			}
 			set
 			{
-				if ((this._CustomerName != value))
+				if ((this._CustomerFirstName != value))
 				{
-					this.OnCustomerNameChanging(value);
+					this.OnCustomerFirstNameChanging(value);
 					this.SendPropertyChanging();
-					this._CustomerName = value;
-					this.SendPropertyChanged("CustomerName");
-					this.OnCustomerNameChanged();
+					this._CustomerFirstName = value;
+					this.SendPropertyChanged("CustomerFirstName");
+					this.OnCustomerFirstNameChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerID", DbType="Int")]
-		public System.Nullable<int> CustomerID
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerLastName", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string CustomerLastName
 		{
 			get
 			{
-				return this._CustomerID;
+				return this._CustomerLastName;
 			}
 			set
 			{
-				if ((this._CustomerID != value))
+				if ((this._CustomerLastName != value))
 				{
-					if (this._Customer.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnCustomerIDChanging(value);
+					this.OnCustomerLastNameChanging(value);
 					this.SendPropertyChanging();
-					this._CustomerID = value;
-					this.SendPropertyChanged("CustomerID");
-					this.OnCustomerIDChanged();
+					this._CustomerLastName = value;
+					this.SendPropertyChanged("CustomerLastName");
+					this.OnCustomerLastNameChanged();
 				}
 			}
 		}
@@ -277,40 +270,6 @@ namespace HumaneSociety
 						this._AnimalID = default(Nullable<int>);
 					}
 					this.SendPropertyChanged("Animal");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Customer_AdoptionLog", Storage="_Customer", ThisKey="CustomerID", OtherKey="CustomerID", IsForeignKey=true)]
-		public Customer Customer
-		{
-			get
-			{
-				return this._Customer.Entity;
-			}
-			set
-			{
-				Customer previousValue = this._Customer.Entity;
-				if (((previousValue != value) 
-							|| (this._Customer.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Customer.Entity = null;
-						previousValue.AdoptionLogs.Remove(this);
-					}
-					this._Customer.Entity = value;
-					if ((value != null))
-					{
-						value.AdoptionLogs.Add(this);
-						this._CustomerID = value.CustomerID;
-					}
-					else
-					{
-						this._CustomerID = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("Customer");
 				}
 			}
 		}
@@ -664,8 +623,6 @@ namespace HumaneSociety
 		
 		private string _CustomerLastName;
 		
-		private EntitySet<AdoptionLog> _AdoptionLogs;
-		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -690,7 +647,6 @@ namespace HumaneSociety
 		
 		public Customer()
 		{
-			this._AdoptionLogs = new EntitySet<AdoptionLog>(new Action<AdoptionLog>(this.attach_AdoptionLogs), new Action<AdoptionLog>(this.detach_AdoptionLogs));
 			OnCreated();
 		}
 		
@@ -854,19 +810,6 @@ namespace HumaneSociety
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Customer_AdoptionLog", Storage="_AdoptionLogs", ThisKey="CustomerID", OtherKey="CustomerID")]
-		public EntitySet<AdoptionLog> AdoptionLogs
-		{
-			get
-			{
-				return this._AdoptionLogs;
-			}
-			set
-			{
-				this._AdoptionLogs.Assign(value);
-			}
-		}
-		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -885,18 +828,6 @@ namespace HumaneSociety
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
-		}
-		
-		private void attach_AdoptionLogs(AdoptionLog entity)
-		{
-			this.SendPropertyChanging();
-			entity.Customer = this;
-		}
-		
-		private void detach_AdoptionLogs(AdoptionLog entity)
-		{
-			this.SendPropertyChanging();
-			entity.Customer = null;
 		}
 	}
 }
