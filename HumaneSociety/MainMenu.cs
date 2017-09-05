@@ -20,7 +20,6 @@ namespace HumaneSociety
         public void WelcomeMenu()
         {
             Console.WriteLine("Welcome to the Humane Society. Are you an Employee or a Customer?");
-            Console.Write(" ");
             UserInput = Console.ReadLine();
             ChangeMenus(UserInput);
         }

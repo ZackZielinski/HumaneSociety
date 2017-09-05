@@ -170,7 +170,7 @@ namespace HumaneSociety
 
                 var CurrentCustomer = CustomerList.First(x => x.CustomerFirstName == FirstCustomerInput && x.CustomerLastName == SecondCustomerInput);
 
-                string Eligibility = CheckAdoptionStatus(CurrentCustomer);
+                string Eligibility = CheckCustomerAdoptionStatus(CurrentCustomer);
 
                 Console.WriteLine("ID Number: " + CurrentCustomer.CustomerID + "\n Name:" + CurrentCustomer.CustomerFirstName + " " + CurrentCustomer.CustomerLastName + "\n Age: " + CurrentCustomer.CustomerAge + "\n Likes: " + CurrentCustomer.CustomerLikeAnimalType + "\n Specifically Likes: " + CurrentCustomer.CustomerLikeAnimalBreed + "\n Dislikes: " + CurrentCustomer.CustomerDislikeAnimalType + "\n Is Eligible To Adopt an Animal: " + Eligibility);
             }
@@ -178,7 +178,7 @@ namespace HumaneSociety
             {
                 var CurrentCustomer = CustomerList.First(x => x.CustomerID == Convert.ToInt32(FirstCustomerInput));
 
-                string Eligibility = CheckAdoptionStatus(CurrentCustomer);
+                string Eligibility = CheckCustomerAdoptionStatus(CurrentCustomer);
                 
                 Console.WriteLine("ID Number: " + CurrentCustomer.CustomerID + "\n Name:" + CurrentCustomer.CustomerFirstName + " " + CurrentCustomer.CustomerLastName + "\n Age: " + CurrentCustomer.CustomerAge + "\n Likes: " + CurrentCustomer.CustomerLikeAnimalType + "\n Specifically Likes: " + CurrentCustomer.CustomerLikeAnimalBreed + "\n Dislikes: " + CurrentCustomer.CustomerDislikeAnimalType + "\n Is Eligible To Adopt an Animal: " + Eligibility);
 
@@ -186,7 +186,7 @@ namespace HumaneSociety
             }
         }
 
-        private string CheckAdoptionStatus(Customer CurrentCustomer)
+        private string CheckCustomerAdoptionStatus(Customer CurrentCustomer)
         {
 
             if (CurrentCustomer.IsEligibleToAdopt == true)
@@ -263,6 +263,7 @@ namespace HumaneSociety
                 }
                 else
                 {
+                    Console.WriteLine("Okay. Returning to Menu.");
                     Menu();
                 }
             }
@@ -279,8 +280,42 @@ namespace HumaneSociety
                 var SearchedAnimalList = AnimalList.Where(y => y.AnimalAge == SearchAge);
                 foreach(var animal in SearchedAnimalList)
                 {
-                    Console.WriteLine("Name:" + animal.AnimalName + "\n Age: " + animal.AnimalAge + " Years old \n Type: " + animal.AnimalType + "\n Breed: " + animal.Breed + "\n Last Vaccine Shot: " + animal.LastVaccineShot + "\n Needs to be fed " + animal.FoodBowlsNeeded + " times per day. \n Room Number :" + animal.Room + "\n Is Adopted: " + AdoptStatus + "\n $" + animal.Price);
+                    string AdoptStatus = CheckAnimalAdoptionStatus(animal);
+                    Console.WriteLine("Name:" + animal.AnimalName + "\n Age: " + animal.AnimalAge + " Years old \n Type: " + animal.AnimalType + "\n Breed: " + animal.Breed + "\n Last Vaccine Shot: " + animal.LastVaccineShot + "\n Needs to be fed " + animal.FoodBowlsNeeded + " times per day.\n Is Adopted: " + AdoptStatus + "\n $" + animal.Price);
                 }
+            }
+
+        }
+        private void SearchByPrice()
+        {
+            var AnimalList = GetAnimalData();
+            Console.WriteLine("Do you wish to see from? \n 1 - Least to Greatest price \n 2 - Greatest to Least price");
+            int OrderOfList = Convert.ToInt32(Console.ReadLine());
+
+            switch (OrderOfList)
+            {
+                case 1:
+                    var PriceSearch = AnimalList.OrderBy(x => x.Price);
+                    foreach (var animal in PriceSearch)
+                    {
+                        string AdoptStatus = CheckAnimalAdoptionStatus(animal);
+                        Console.WriteLine("Name:" + animal.AnimalName + "\n Age: " + animal.AnimalAge + " Years old \n Type: " + animal.AnimalType + "\n Breed: " + animal.Breed + "\n Last Vaccine Shot: " + animal.LastVaccineShot + "\n Needs to be fed " + animal.FoodBowlsNeeded + " times per day.\n Is Adopted: " + AdoptStatus + "\n $" + animal.Price);
+                    }
+                    break;
+                case 2:
+                    var PriceDecendingSearch = AnimalList.OrderByDescending(x => x.Price);
+                    foreach (var animal in PriceDecendingSearch)
+                    {
+                        string AdoptStatus = CheckAnimalAdoptionStatus(animal);
+                        Console.WriteLine("Name:" + animal.AnimalName + "\n Age: " + animal.AnimalAge + " Years old \n Type: " + animal.AnimalType + "\n Breed: " + animal.Breed + "\n Last Vaccine Shot: " + animal.LastVaccineShot + "\n Needs to be fed " + animal.FoodBowlsNeeded + " times per day.\n Is Adopted: " + AdoptStatus + "\n $" + animal.Price);
+                    }
+                    break;
+                default:
+                    Console.WriteLine("Sorry. That is not an option. Returning to Menu.");
+                    Console.ReadLine();
+                    Menu();
+                    break;
+
             }
 
         }
