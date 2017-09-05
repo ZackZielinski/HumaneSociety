@@ -37,6 +37,10 @@ namespace HumaneSociety
                CustomerLastName = CustomerLastName,
                Profit = AdoptedAnimal.Price
             };
+
+            HumaneDatabase.AdoptionLogs.InsertOnSubmit(NewLog);
+            HumaneDatabase.SubmitChanges();
+
             Console.WriteLine("Adoption Logged. Have a nice Day!");
             Console.ReadLine();
         }

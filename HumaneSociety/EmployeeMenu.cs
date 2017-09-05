@@ -33,17 +33,10 @@ namespace HumaneSociety
             {
                 case 1:
                     var AnimalList = GetAnimalData();
-                    string AdoptStatus;
+                    
                     foreach (var animal in AnimalList)
                     {
-                        if (animal.IsAdopted == false)
-                        {
-                            AdoptStatus = "Yes";
-                        }
-                        else
-                        {
-                            AdoptStatus = "No";
-                        }
+                        string AdoptStatus = CheckAnimalAdoptionStatus(animal);
                         Console.WriteLine("ID Number: " + animal.AnimalID + "\n Name:" + animal.AnimalName + "\n Age: " + animal.AnimalAge + " Years old \n Type: " + animal.AnimalType + "\n Breed: " + animal.Breed + "\n Last Shot: " + animal.LastVaccineShot + "\n Needs to be fed " + animal.FoodBowlsNeeded + " times per day. \n Room Number :" + animal.Room + "\n Is Adopted: " + AdoptStatus + "\n $" + animal.Price);
                     }
                     Console.ReadLine();
@@ -56,17 +49,10 @@ namespace HumaneSociety
 
                 case 3:
                     var CustomerList = GetCustomerData();
-                    string Eligibility;
+                    
                     foreach(var customer in CustomerList)
                     {
-                        if(customer.IsEligibleToAdopt == false)
-                        {
-                            Eligibility = "Yes";
-                        }
-                        else
-                        {
-                            Eligibility = "No";
-                        }
+                        string Eligibility = CheckCustomerAdoptionStatus(customer);
                         Console.WriteLine(" ID Number : " + customer.CustomerID + "\n Name:" + customer.CustomerFirstName + " " + customer.CustomerLastName + "\n Age: " + customer.CustomerAge + "\n Likes: " + customer.CustomerLikeAnimalType + "\n Specifically Likes: " + customer.CustomerLikeAnimalBreed + "\n Dislikes: " + customer.CustomerDislikeAnimalType + "\n Is Eligible To Adopt an Animal: " + Eligibility);
                     }
                     break;
@@ -90,6 +76,34 @@ namespace HumaneSociety
                     Console.WriteLine("Sorry, that is not an option. Please try again.");
                     SelectOption(Input);
                     break;
+            }
+
+        }
+
+        private string CheckAnimalAdoptionStatus(Animal CurrentAnimal)
+        {
+
+            if (CurrentAnimal.IsAdopted == true)
+            {
+                return "Yes";
+            }
+            else
+            {
+                return "No";
+            }
+
+        }
+
+        private string CheckCustomerAdoptionStatus(Customer CurrentCustomer)
+        {
+
+            if (CurrentCustomer.IsEligibleToAdopt == true)
+            {
+                return "Yes";
+            }
+            else
+            {
+                return "No";
             }
 
         }
@@ -222,8 +236,103 @@ namespace HumaneSociety
         {
             Console.WriteLine("Would you like to add a customer (1) \n or change a customer's adoption eligibility? (2)");
             EmployeeInput = Convert.ToInt32(Console.ReadLine());
+
+            switch (EmployeeInput)
+            {
+                case 1:
+                    AddNewCustomer();
+                    break;
+                case 2:
+                    ChangeEligibility();
+                    break;
+                default:
+                    Console.WriteLine("Sorry. That is not an option. Returning to Menu");
+                    Menu();
+                    break;
+            }
+
         }
 
+        private void AddNewCustomer()
+        {
+            Console.WriteLine("Enter Customer's First Name:");
+            string NewCustomerFirstName = Console.ReadLine();
+
+            Console.WriteLine("Enter Customer's Last Name:");
+            string NewCustomerLastName = Console.ReadLine();
+
+            Console.WriteLine("Enter Customer's Age:");
+            int NewCustomerAge = Convert.ToInt32(Console.ReadLine());
+
+            Console.WriteLine("Enter a Type of Animal the Customer likes:");
+            string NewCustomerTypeLikes = Console.ReadLine();
+
+            Console.WriteLine("Enter a Breed of the Animal they like:");
+            string NewCustomerBreedLikes = Console.ReadLine();
+
+            Console.WriteLine("Enter an animal the Customer doesn't like:");
+            string NewCustomerDislike = Console.ReadLine();
+
+            bool IsCustomerEligible = CheckIfCustomerCanAdopt(NewCustomerAge);
+
+            var NewCustomer = new Customer
+            {
+                CustomerFirstName = NewCustomerFirstName,
+                CustomerLastName = NewCustomerLastName,
+                CustomerAge = NewCustomerAge,
+                CustomerLikeAnimalType = NewCustomerTypeLikes,
+                CustomerLikeAnimalBreed = NewCustomerBreedLikes,
+                CustomerDislikeAnimalType = NewCustomerDislike,
+                IsEligibleToAdopt = IsCustomerEligible
+            };
+
+            HumaneDatabase.Customers.InsertOnSubmit(NewCustomer);
+            HumaneDatabase.SubmitChanges();
+        }
+        private bool CheckIfCustomerCanAdopt(int AgeOfCustomer)
+        {
+            if (AgeOfCustomer >= 18)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private void ChangeEligibility()
+        {
+            var CustomerList = GetCustomerData();
+            Console.WriteLine("Enter the Customer's First Name");
+            string FirstName = Console.ReadLine();
+
+            Console.WriteLine("Enter the Customer's Last Name");
+            string LastName = Console.ReadLine();
+
+            if (CustomerList.Any(x => x.CustomerFirstName == FirstName && x.CustomerLastName == LastName == true))
+                {
+                var SelectedCustomer = CustomerList.First(y => y.CustomerFirstName == FirstName && y.CustomerLastName == LastName);
+                Console.WriteLine($"What is {SelectedCustomer.CustomerFirstName} {SelectedCustomer.CustomerLastName}'s current eligiblity to adopt?");
+                Console.WriteLine("1 - Can Adopt \n 2 - Can't Adopt");
+                int AdoptStatus = Convert.ToInt32(Console.ReadLine());
+
+                switch (AdoptStatus)
+                {
+                    case 1:
+                        SelectedCustomer.IsEligibleToAdopt = true;
+                        break;
+                    case 2:
+                        SelectedCustomer.IsEligibleToAdopt = false;
+                        break;
+                    default:
+                        Console.WriteLine("Sorry, that is not an option. Returning to menu");
+                        Menu();
+                        break;
+                }
+
+            }
+        }
 
     }
 }
