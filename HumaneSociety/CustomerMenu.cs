@@ -9,7 +9,6 @@ namespace HumaneSociety
     class CustomerMenu
     {
         int CustomerInput;
-        string AdoptStatus;
         HumaneSocietyDataDataContext HumaneDatabase;
 
         public CustomerMenu()
@@ -137,59 +136,21 @@ namespace HumaneSociety
 
         private void SearchByTraits()
         {
-            var AnimalList = GetAnimalData();
-            Console.WriteLine("What type of animal would you like to see?");
-            string AnimalSearch = Console.ReadLine();
+            
+            Console.WriteLine("What type of animal would you like to see? \n 1 - Type And/Or Breed \n 2 - Age \n 3 - Price");
+            int AnimalSearch = Convert.ToInt32(Console.ReadLine());
 
-
-            if (AnimalList.Any(x => x.AnimalType == AnimalSearch) == true)
+            switch (AnimalSearch)
             {
-                var SearchedAnimals = AnimalList.Where(x => x.AnimalType == AnimalSearch);
-                
-                foreach (var animal in SearchedAnimals)
-                {
-                    if (animal.IsAdopted == false)
-                    {
-                        AdoptStatus = "No";
-                    }
-                    else
-                    {
-                        AdoptStatus = "Yes";
-                    }
-                    Console.WriteLine("Name: " + animal.AnimalName + "\n Age: " + animal.AnimalAge + "Years old \n Breed:" + animal.Breed + "Needs to be fed "+ animal.FoodBowlsNeeded + " per day \n Last Vaccine Shot:" + animal.LastVaccineShot + "\n Adoption Status: " + AdoptStatus + " \n $" + animal.Price);
-                    
-                }
-            }
-            else if (AnimalList.Any(x => x.Breed == AnimalSearch) == true)
-            {
-                var SearchedAnimals = AnimalList.Where(x => x.Breed == AnimalSearch);
-
-                foreach (var animal in SearchedAnimals)
-                {
-                    if (animal.IsAdopted == false)
-                    {
-                        AdoptStatus = "No";
-                    }
-                    else
-                    {
-                        AdoptStatus = "Yes";
-                    }
-                    Console.WriteLine("Name: " + animal.AnimalName + "\n Age: " + animal.AnimalAge + "Years old \n Type:" + animal.AnimalType + "Needs to be fed " + animal.FoodBowlsNeeded + " per day \n Last Vaccine Shot:" + animal.LastVaccineShot + "\n Adoption Status: " + AdoptStatus + " \n $" + animal.Price);
-
-                }
-            }
-            else
-            {
-                Console.WriteLine("Sorry. We don't have that type here. Want to search for something else? (y/n)");
-                AnimalSearch = Console.ReadLine().ToLower();
-                if (AnimalSearch == "y")
-                {
-                    SearchByTraits();
-                }
-                else
-                {
-                    Menu();
-                }
+                case 1:
+                    SearchByTypeAndBreed();
+                    break;
+                case 2:
+                    SearchByAge();
+                    break;
+                case 3:
+                    SearchByPrice();
+                    break;
             }
 
         }
@@ -249,6 +210,79 @@ namespace HumaneSociety
         {
             var result = from i in HumaneDatabase.Customers select i;
             return result.ToList();
+        }
+        private string CheckAnimalAdoptionStatus(Animal CurrentAnimal)
+        {
+
+            if (CurrentAnimal.IsAdopted == true)
+            {
+                return "Yes";
+            }
+            else
+            {
+                return "No";
+            }
+
+        }
+        private void SearchByTypeAndBreed()
+        {
+            var AnimalList = GetAnimalData();
+            Console.WriteLine("What type of animal are you looking for?");
+            string AnimalSearch = Console.ReadLine();
+
+
+            if (AnimalList.Any(x => x.AnimalType == AnimalSearch) == true)
+            {
+                var SearchedAnimals = AnimalList.Where(x => x.AnimalType == AnimalSearch);
+
+                foreach (var animal in SearchedAnimals)
+                {
+                    string AdoptStatus = CheckAnimalAdoptionStatus(animal);
+                    Console.WriteLine("Name: " + animal.AnimalName + "\n Age: " + animal.AnimalAge + "Years old \n Breed:" + animal.Breed + "Needs to be fed " + animal.FoodBowlsNeeded + " per day \n Last Vaccine Shot:" + animal.LastVaccineShot + "\n Adoption Status: " + AdoptStatus + " \n $" + animal.Price);
+
+                }
+            }
+            else if (AnimalList.Any(x => x.Breed == AnimalSearch) == true)
+            {
+                var SearchedAnimals = AnimalList.Where(x => x.Breed == AnimalSearch);
+
+                foreach (var animal in SearchedAnimals)
+                {
+                    string AdoptStatus = CheckAnimalAdoptionStatus(animal);
+                    Console.WriteLine("Name: " + animal.AnimalName + "\n Age: " + animal.AnimalAge + "Years old \n Type:" + animal.AnimalType + "Needs to be fed " + animal.FoodBowlsNeeded + " per day \n Last Vaccine Shot:" + animal.LastVaccineShot + "\n Adoption Status: " + AdoptStatus + " \n $" + animal.Price);
+
+                }
+            }
+            else
+            {
+                Console.WriteLine("Sorry. We don't have that type here. Want to search for something else? (y/n)");
+                AnimalSearch = Console.ReadLine().ToLower();
+                if (AnimalSearch == "y")
+                {
+                    SearchByTraits();
+                }
+                else
+                {
+                    Menu();
+                }
+            }
+        }
+
+        private void SearchByAge()
+        {
+            var AnimalList = GetAnimalData();
+            Console.WriteLine("Enter an Age to search for");
+            int SearchAge = Convert.ToInt32(Console.ReadLine());
+
+            if (AnimalList.Any(x => x.AnimalAge == SearchAge) == true)
+            {
+                var SearchedAnimalList = AnimalList.Where(y => y.AnimalAge == SearchAge);
+                foreach(var animal in SearchedAnimalList)
+                {
+                    Console.WriteLine("Name:" + animal.AnimalName + "\n Age: " + animal.AnimalAge + " Years old \n Type: " + animal.AnimalType + "\n Breed: " + animal.Breed + "\n Last Vaccine Shot: " + animal.LastVaccineShot + "\n Needs to be fed " + animal.FoodBowlsNeeded + " times per day. \n Room Number :" + animal.Room + "\n Is Adopted: " + AdoptStatus + "\n $" + animal.Price);
+                }
+            }
+
         }
     }
     }

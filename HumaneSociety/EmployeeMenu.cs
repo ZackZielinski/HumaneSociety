@@ -37,7 +37,7 @@ namespace HumaneSociety
                     foreach (var animal in AnimalList)
                     {
                         string AdoptStatus = CheckAnimalAdoptionStatus(animal);
-                        Console.WriteLine("ID Number: " + animal.AnimalID + "\n Name:" + animal.AnimalName + "\n Age: " + animal.AnimalAge + " Years old \n Type: " + animal.AnimalType + "\n Breed: " + animal.Breed + "\n Last Shot: " + animal.LastVaccineShot + "\n Needs to be fed " + animal.FoodBowlsNeeded + " times per day. \n Room Number :" + animal.Room + "\n Is Adopted: " + AdoptStatus + "\n $" + animal.Price);
+                        Console.WriteLine("ID Number: " + animal.AnimalID + "\n Name:" + animal.AnimalName + "\n Age: " + animal.AnimalAge + " Years old \n Type: " + animal.AnimalType + "\n Breed: " + animal.Breed + "\n Last Vaccine Shot: " + animal.LastVaccineShot + "\n Needs to be fed " + animal.FoodBowlsNeeded + " times per day. \n Room Number :" + animal.Room + "\n Is Adopted: " + AdoptStatus + "\n $" + animal.Price);
                     }
                     Console.ReadLine();
                     Menu();
