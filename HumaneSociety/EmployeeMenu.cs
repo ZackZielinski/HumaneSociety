@@ -11,6 +11,7 @@ namespace HumaneSociety
         int EmployeeInput;
         HumaneSocietyDataDataContext HumaneDatabase;
         Transactions AdoptingAnAnimal;
+        CSVImport ImportedFile;
 
         public EmployeeMenu()
         {
@@ -20,7 +21,7 @@ namespace HumaneSociety
         public void Menu()
         {
             Console.WriteLine("Hello, employee. What would you like to do?");
-            Console.WriteLine(" 1 - View Animal Database \n 2 - Edit Animal Database \n 3 - View Customer Database \n 4 - Edit Customer Database \n 5 - Exit");
+            Console.WriteLine(" 1 - View Animal Database \n 2 - Edit Animal Database \n 3 - View Customer Database \n 4 - Edit Customer Database \n 5 - Start Adoption Transaction \n 6 - Exit");
             Console.Write(" ");
             EmployeeInput = Convert.ToInt32(Console.ReadLine());
 
@@ -122,7 +123,7 @@ namespace HumaneSociety
 
         private void EditAnimalDatabase()
         {
-            Console.WriteLine("Would you like to: \n 1 - Add an Animal \n 2 - Edit an Animal's Adoption Status \n 3 - Edit an Animal's Last Vaccince Shot Date");
+            Console.WriteLine("Would you like to: \n 1 - Add an Animal \n 2 - Edit an Animal's Adoption Status \n 3 - Edit an Animal's Last Vaccince Shot Date \n 4 - Import CSV File of Animals");
             int EditInput = Convert.ToInt32(Console.ReadLine());
 
             switch (EditInput)
@@ -135,6 +136,10 @@ namespace HumaneSociety
                     break;
                 case 3:
                     EditVaccineDate();
+                    break;
+                case 4:
+                    ImportedFile = new CSVImport();
+                    ImportedFile.StartImport();
                     break;
                 default:
                     Console.WriteLine("Sorry. That is not an option. Returning to Menu.");
@@ -193,7 +198,7 @@ namespace HumaneSociety
             if (AnimalList.Any(x => x.AnimalID == AnimalIDNumber) == true)
             {
                 var SelectedAnimal = AnimalList.First(x => x.AnimalID == AnimalIDNumber);
-                Console.WriteLine("When was their most recent Vaccination? (MM/DD/YYYY or MM-DD-YYYY)");
+                Console.WriteLine("When was their most recent Vaccination? (MM-DD-YYYY)");
                 SelectedAnimal.LastVaccineShot = Console.ReadLine();
             }
             else
